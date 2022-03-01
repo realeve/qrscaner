@@ -1,0 +1,16 @@
+.alignRow {
+  display: flex;
+  flex-direction: row;
+}
+.fields {
+  .alignRow;
+  align-items: center;
+  .title {
+    margin-right: 20px;
+    min-width: 60px;
+    text-align: right;
+    &:after {
+      content: ':';
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/npm-debug.log*
+/yarn-error.log
+/yarn.lock
+/package-lock.json
+
+# production
+/dist
+
+# misc
+.DS_Store
+
+# umi
+.umi
+.umi-production
+
+# 文档中涉及MES系统界面截图与图像，不上传
+/doc
+
+// 分解后的号单，用于本地测试用
+/public/pdf/
+/public/pdf/*.*
+
+
+/public/img/异地入库.jpg
+/public/img/异地入库backup.jpg

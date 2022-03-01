@@ -1,0 +1,24 @@
+[
+  {
+    "width": 4416,
+    "height": 3312
+  },
+  {
+    "width": 4208,
+    "height": 3120
+  },
+  {
+    "width": 3264,
+    "height": 2448
+  },
+  {
+    "width": 2592,
+    "height": 1944
+  },
+  { "width": 2048, "height": 1536 },
+  { "width": 1920, "height": 1080 },
+  { "width": 1600, "height": 1200 },
+  { "width": 1280, "height": 960 },
+  { "width": 1280, "height": 720 },
+  { "width": 640, "height": 480 }
+]

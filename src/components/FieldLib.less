@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  .label {
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    z-index: 1;
+  }
+}
+.note_container {
+  .notes {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 10px;
+    .item {
+      padding: 5px;
+      outline: 1px solid #ddd;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        background: #dff7ff;
+      }
+    }
+  }
+}

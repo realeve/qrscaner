@@ -1,0 +1,34 @@
+.ant-form-item {
+  margin-bottom: 12px;
+  &-with-help {
+    margin-bottom: 0;
+  }
+  &-label {
+    width: 150px;
+    label {
+      cursor: pointer;
+    }
+  }
+  &-control {
+    .ant-form-item-control-input-content {
+      max-width: 200px;
+    }
+  }
+  &-extra {
+    color: #757575;
+  }
+  .ant-tag {
+    cursor: pointer;
+  }
+}
+
+:global {
+  .ant-form-item-control {
+    flex: 1; 
+  }
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
