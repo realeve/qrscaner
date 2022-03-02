@@ -14,7 +14,7 @@ import { axios } from '@/utils/axios';
 
 export interface ISelectProp<T extends RawValue[] | RawValue>
   extends Omit<SelectProps<number>, 'defaultValue'>,
-    Omit<IFormItemProps, 'children' | 'label'> {
+  Omit<IFormItemProps, 'children' | 'label'> {
   /** 下拉选项列表 */
   data?: TSelect | TSelectGroup;
   /** 值 */

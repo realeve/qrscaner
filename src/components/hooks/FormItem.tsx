@@ -17,23 +17,26 @@ export interface IFormItemProps {
   /** 显示错误 */
   hasError?: boolean;
   /** 字段说明文字 */
-  extra?: string|React.ReactNode;
+  extra?: string | React.ReactNode;
   loading?: boolean;
   style?: React.CSSProperties;
   children?: React.ReactNode;
   span?: number;
+  labelWidth?: number;
   [key: string]: any;
 }
 export default function FormItem({
   label,
   name,
   required,
-  message = null,
+  message = '',
   hasError = false,
   extra = null,
   children,
   style = {},
-  span = 12, 
+  span = 12,
+  width,
+  labelWidth = 100,
   ...props
 }: IFormItemProps) {
   return (
@@ -46,7 +49,7 @@ export default function FormItem({
         style={style}
         {...props}
       >
-        <div className="ant-col ant-form-item-label">
+        <div className="ant-col ant-form-item-label" style={{ width: labelWidth }}>
           <label htmlFor={name} className={classnames({ ['ant-form-item-required']: required })}>
             {label}
           </label>

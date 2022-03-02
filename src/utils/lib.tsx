@@ -8,18 +8,6 @@ export const now = () => moment().format('YYYY-MM-DD HH:mm:ss');
 export const weeks = () => moment().weeks();
 
 export const ymd = () => moment().format('YYYYMMDD');
-export const isGZ = (str: any) => /^[A-Z](|\d+)(|[A-Z])(|\d+)$/.test(String(str));
-export const isNRB = (str: any) => /^[A-Z](|[1-9]|[1-9]\d|100)$/.test(String(str));
-export const isCart = (str: string) => /^[0-9]\d{3}[A-Za-z]\d{3}(|[a-bA-B])$/.test(str);
-
-// 获取开数
-export const getPercentage = (prodname: string) => {
-  prodname = String(prodname || '');
-  if (prodname.includes('9602') || prodname.includes('9603')) {
-    return 40;
-  }
-  return 35;
-};
 
 export const getType = axios.getType;
 
@@ -42,46 +30,6 @@ export const setStore = (state: {} | any[], store: Store) => {
     }
   });
   return nextState;
-};
-export const convertToChinaNum = (num: string | number = '') => {
-  var arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
-  var arr2 = new Array(
-    '',
-    '十',
-    '百',
-    '千',
-    '万',
-    '十',
-    '百',
-    '千',
-    '亿',
-    '十',
-    '百',
-    '千',
-    '万',
-    '十',
-    '百',
-    '千',
-    '亿',
-  ); //可继续追加更高位转换值
-  if (!num) {
-    return '零';
-  }
-  var english = num.toString().split('');
-  var result = '';
-  for (var i = 0; i < english.length; i++) {
-    var des_i = english.length - 1 - i; //倒序排列设值
-    result = arr2[i] + result;
-    var arr1_index = english[des_i];
-    result = arr1[Number(arr1_index)] + result;
-  } //将【零千、零百】换成【零】 【十零】换成【十】
-  result = result.replace(/零(千|百|十)/g, '零').replace(/十零/g, '十'); //合并中间多个零为一个零
-  result = result.replace(/零+/g, '零'); //将【零亿】换成【亿】【零万】换成【万】
-  result = result.replace(/零亿/g, '亿').replace(/零万/g, '万'); //将【亿万】换成【亿】
-  result = result.replace(/亿万/g, '亿'); //移除末尾的零
-  result = result.replace(/零+$/, ''); //将【零一十】换成【零十】 //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十 //将【一十】换成【十】
-  result = result.replace(/^一十/g, '十');
-  return result;
 };
 
 export const noncer = () =>
