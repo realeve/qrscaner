@@ -12,6 +12,7 @@
     "dva": "^2.6.0-beta.6",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.0.0-rc.5",
+    "qrcode-reader": "^1.0.4",
     "qs": "^6.9.4",
     "ramda": "^0.27.0",
     "react": "^16.8.6",
@@ -19,7 +20,8 @@
     "react-dom": "^16.8.6",
     "react-qr-decode": "^2.2.1",
     "react-qr-reader": "^3.0.0-beta-1",
-    "react-use": "^15.1.1"
+    "react-use": "^15.1.1",
+    "webrtc-adapter": "^8.1.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
@@ -39,6 +41,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
+    "jimp": "^0.16.1",
     "lint-staged": "^7.2.2",
     "react-test-renderer": "^16.7.0",
     "umi": "^2.9.0",

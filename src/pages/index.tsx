@@ -1,41 +1,57 @@
-import React, { useState, useEffect } from 'react'
-import { QrReader, OnResultFunction } from 'react-qr-reader'
+import React, { useState, useEffect, useRef } from 'react'
+// import { QrReader, OnResultFunction } from 'react-qr-reader'
 import styles from './index.less'
-import { Button, message, notification } from 'antd'
+import { Button, message, notification, Input } from 'antd'
 import * as db from './db'
-const cameraCfg = [
-    {
-        width: 4416,
-        height: 3312,
-    },
-    {
-        width: 4208,
-        height: 3120,
-    },
-    {
-        width: 3264,
-        height: 2448,
-    },
-    {
-        width: 2592,
-        height: 1944,
-    },
-    { width: 2048, height: 1536 },
-    { width: 1920, height: 1080 },
-    { width: 1600, height: 1200 },
-    { width: 1280, height: 960 },
-    { width: 1280, height: 720 },
-    { width: 640, height: 480 },
-];
+import { useDebounce } from 'react-use'
+// const cameraCfg = [
+//     {
+//         width: 4416,
+//         height: 3312,
+//     },
+//     {
+//         width: 4208,
+//         height: 3120,
+//     },
+//     {
+//         width: 3264,
+//         height: 2448,
+//     },
+//     {
+//         width: 2592,
+//         height: 1944,
+//     },
+//     { width: 2048, height: 1536 },
+//     { width: 1920, height: 1080 },
+//     { width: 1600, height: 1200 },
+//     { width: 1280, height: 960 },
+//     { width: 1280, height: 720 },
+//     { width: 640, height: 480 },
+// ];
 const recConfig = ['地区', '版本号', '票据代码', '票据号码', '校验码', '开票日期', '金额']
 const keys = ['area', 'version', 'code', 'sn', 'token', 'datename', 'paymount']
 export default () => {
-    const [state, setState] = useState<string | undefined>(undefined)
+    const ref = useRef(null)
+
+
+    const [val, setVal] = useState<string>('')
     const [result, setResult] = useState<string[]>([])
-    const handleScan: OnResultFunction = (result) => {
-        const data = result?.getText?.()
-        if (data) {
-            setState(data)
+
+    const [state, setState] = useState('');
+    useDebounce(
+        () => {
+            if (val.length > 0) {
+                setState(val);
+            }
+            setVal('')
+        },
+        100,
+        [val],
+    );
+
+    const handleScan = (data: string) => {
+        // const data = result?.getText?.()
+        if (data.length > 0) {
             let res = data.split(',')
             setResult(res)
         }
@@ -52,6 +68,11 @@ export default () => {
         setCount(count => count + 1)
         handleCheck()
     }, [state])
+
+    useEffect(() => {
+        ref?.current?.focus?.()
+        console.log(ref?.current)
+    }, [])
 
     const handleCheck = async () => {
         if (!state) { return }
@@ -72,9 +93,10 @@ export default () => {
         let params: { [e: string]: string; qr_code: string; } = {
             qr_code: state,
         }
-        result.forEach((val, key) => {
+        state.split(',').forEach((val, key) => {
             params[keys[key]] = val
         })
+        console.log(result, keys, params)
         let id = await db.addCbpcInvoice(params).catch(e => {
             return 0;
         })
@@ -90,15 +112,11 @@ export default () => {
 
     return (
         <div className={styles.container}>
-            <QrReader
-                scanDelay={1000}
-                className={styles.qr}
-                onResult={handleScan}
-                constraints={{
-                    ...cameraCfg[4],
-                    aspectRatio: 16 / 9
-                }}
-            />
+            <Input size='large' ref={ref} style={{ height: 100 }} value={val} onChange={e => {
+                setVal(e.target.value)
+                handleScan(e.target.value)
+            }} />
+
             <div className={styles.result}>
                 <h2>识别结果</h2>
                 <div className={styles.title}>
