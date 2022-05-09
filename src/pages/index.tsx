@@ -28,8 +28,16 @@ import { useDebounce } from 'react-use'
 //     { width: 1280, height: 720 },
 //     { width: 640, height: 480 },
 // ];
+
 const recConfig = ['地区', '版本号', '票据代码', '票据号码', '校验码', '开票日期', '金额']
+
 const keys = ['area', 'version', 'code', 'sn', 'token', 'datename', 'paymount']
+
+
+
+const recConfig2 = ['地区', '版本号', '发票代码', '发票号码', '金额', '开票日期', '校验码', '验证码']
+const keys2 = ['area', 'version', 'code', 'sn', 'paymount', 'datename', 'token', 'token2',]
+
 export default () => {
     const ref = useRef(null)
 
@@ -38,6 +46,7 @@ export default () => {
     const [result, setResult] = useState<string[]>([])
 
     const [state, setState] = useState('');
+
     useDebounce(
         () => {
             if (val.length > 0) {
@@ -71,7 +80,7 @@ export default () => {
 
     useEffect(() => {
         ref?.current?.focus?.()
-        console.log(ref?.current)
+        // console.log(ref?.current)
     }, [])
 
     const handleCheck = async () => {
@@ -93,13 +102,21 @@ export default () => {
         let params: { [e: string]: string; qr_code: string; } = {
             qr_code: state,
         }
-        state.split(',').forEach((val, key) => {
-            params[keys[key]] = val
+        let qrDetail = state.split(',')
+        let keyList = qrDetail.length < 8 ? keys : keys2
+        if (qrDetail.length > 8) {
+            qrDetail = qrDetail.slice(0, qrDetail.length - 1)
+        }
+        qrDetail.forEach((val, key) => {
+            params[keyList[key]] = val
         })
-        console.log(result, keys, params)
+
+        // console.log(result, keys, params)
+
         let id = await db.addCbpcInvoice(params).catch(e => {
             return 0;
         })
+
         if (id) {
             notification.success({
                 message: '提交成功，请扫描下一张票据',
@@ -107,6 +124,7 @@ export default () => {
             })
             return;
         }
+
         message.error('当前票据信息提交失败，请重试')
     }
 
@@ -124,7 +142,7 @@ export default () => {
                 </div>
                 <div className={styles.dot}>{count}</div>
                 <ul>
-                    {recConfig.map((name, idx) => <li key={name}><div>{name}</div>:<span>{result[idx]}</span></li>)}
+                    {(result.length < 8 ? recConfig : recConfig2).map((name, idx) => <li key={name}><div>{name}</div>:<span>{result[idx]}</span></li>)}
                     <li style={{ fontSize: 16 }}><div>是否有效</div>:<span style={{ color: isRepeat ? 'red' : 'black' }}>{isRepeat ? `否，${checkTime} 扫描` : '是'}</span></li>
                 </ul>
                 <Button type="primary" onClick={submit} disabled={!state || isRepeat}>确认提交</Button>
