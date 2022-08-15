@@ -77,14 +77,24 @@ export default () => {
 
   const [count, setCount] = useState(0);
 
+  // useEffect(() => {
+  //     setIsRepeat(false)
+  //     if (!state) { return }
+  //     setCount(count => count + 1)
+  //     handleCheck()
+  // }, [state])
+
   useEffect(() => {
+    if (val == '') {
+      return;
+    }
     setIsRepeat(false);
     if (!state) {
       return;
     }
     setCount(count => count + 1);
     handleCheck();
-  }, [state]);
+  }, [val]);
 
   useEffect(() => {
     ref?.current?.focus?.();
